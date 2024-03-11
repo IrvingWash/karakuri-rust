@@ -75,7 +75,7 @@ impl Renderer {
             .window(title, resolution.width, resolution.height)
             .position_centered()
             .borderless()
-            .fullscreen()
+            .fullscreen_desktop()
             .build()
             .unwrap_or_else(|e| {
                 logger::log_fatal(format!("Failed to create SDL2 window: {}", e).as_str())

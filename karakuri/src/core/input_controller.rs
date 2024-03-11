@@ -31,8 +31,8 @@ impl InputController {
                 | Event::KeyDown {
                     keycode: Some(Keycode::Escape),
                     ..
-                } => InputResult { should_quit: true },
-                _ => InputResult { should_quit: false },
+                } => self.result.should_quit = true,
+                _ => (),
             };
         }
     }

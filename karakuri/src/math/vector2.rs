@@ -1,6 +1,6 @@
-const DIVISION_BY_ZERO_MESSAGE: &str = "Attempt to divide by zero";
+use crate::logger;
 
-use crate::logger::log_error;
+const DIVISION_BY_ZERO_MESSAGE: &str = "Attempt to divide by zero";
 
 #[derive(Debug)]
 pub struct Vector2 {
@@ -40,7 +40,7 @@ impl Vector2 {
 
     pub fn divide(&mut self, divider: f64) {
         if divider == 0. {
-            log_error(DIVISION_BY_ZERO_MESSAGE);
+            logger::log_error(DIVISION_BY_ZERO_MESSAGE);
 
             return;
         }
