@@ -40,7 +40,7 @@ impl Renderer {
         self.canvas.present();
     }
 
-    pub fn render(&mut self, position: &Vector2, size: &Vector2, color: &Color) {
+    pub fn filled_rectangle(&mut self, position: &Vector2, size: &Vector2, color: &Color) {
         self.canvas.set_draw_color(SdlColor::RGBA(
             color.red,
             color.green,
