@@ -1,12 +1,22 @@
-use sdl2::{event::Event, keyboard::Keycode, EventPump};
+use sdl2::{event::Event, keyboard::Keycode, sys::KeyCode, EventPump};
 
 pub struct InputResult {
     pub should_quit: bool,
+    pub w: bool,
+    pub a: bool,
+    pub s: bool,
+    pub d: bool,
 }
 
 impl InputResult {
     pub fn new() -> InputResult {
-        InputResult { should_quit: false }
+        InputResult {
+            should_quit: false,
+            w: false,
+            a: false,
+            s: false,
+            d: false,
+        }
     }
 }
 
@@ -32,6 +42,38 @@ impl InputController {
                     keycode: Some(Keycode::Escape),
                     ..
                 } => self.result.should_quit = true,
+                Event::KeyDown {
+                    keycode: Some(Keycode::W),
+                    ..
+                } => self.result.w = true,
+                Event::KeyDown {
+                    keycode: Some(Keycode::A),
+                    ..
+                } => self.result.a = true,
+                Event::KeyDown {
+                    keycode: Some(Keycode::S),
+                    ..
+                } => self.result.s = true,
+                Event::KeyDown {
+                    keycode: Some(Keycode::D),
+                    ..
+                } => self.result.d = true,
+                Event::KeyUp {
+                    keycode: Some(Keycode::W),
+                    ..
+                } => self.result.w = false,
+                Event::KeyUp {
+                    keycode: Some(Keycode::A),
+                    ..
+                } => self.result.a = false,
+                Event::KeyUp {
+                    keycode: Some(Keycode::S),
+                    ..
+                } => self.result.s = false,
+                Event::KeyUp {
+                    keycode: Some(Keycode::D),
+                    ..
+                } => self.result.d = false,
                 _ => (),
             };
         }

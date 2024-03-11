@@ -32,7 +32,7 @@ impl Scene {
         renderer: &mut Renderer,
     ) {
         loop {
-            let _delta_time = fps_controller.cap_framerate();
+            let delta_time = fps_controller.cap_framerate();
 
             input_controller.process();
 
@@ -42,13 +42,45 @@ impl Scene {
                 break;
             }
 
+            for entity in &self.entities {
+                match entity {
+                    None => (),
+                    Some(entity) => {
+                        let transform = self.transform_components[*entity].as_mut().unwrap();
+                        let rigid_body = self.rigid_body_components[*entity].as_mut().unwrap();
+
+                        if input_result.w {
+                            rigid_body.velocity.y = -200.;
+                        }
+
+                        if input_result.a {
+                            rigid_body.velocity.x = -200.;
+                        }
+
+                        if input_result.s {
+                            rigid_body.velocity.y = 200.;
+                        }
+
+                        if input_result.d {
+                            rigid_body.velocity.x = 200.;
+                        }
+
+                        transform
+                            .position
+                            .add(&rigid_body.velocity.to_scaled(delta_time));
+
+                        rigid_body.velocity.reset();
+                    }
+                }
+            }
+
             renderer.start_frame();
             for entity in &self.entities {
                 match entity {
                     None => (),
                     Some(entity) => {
-                        let transform = &self.transform_components[*entity].as_ref().unwrap();
-                        let shape = &self.shape_components[*entity].as_ref().unwrap();
+                        let transform = self.transform_components[*entity].as_ref().unwrap();
+                        let shape = self.shape_components[*entity].as_ref().unwrap();
 
                         renderer.filled_rectangle(&transform.position, &shape.size, &shape.color)
                     }

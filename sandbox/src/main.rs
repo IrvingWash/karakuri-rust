@@ -22,7 +22,7 @@ fn main() {
             None,
             None,
         )),
-        Some(RigidBodyComponent::new(Some(Vector2::new(50., 0.)), None)),
+        Some(RigidBodyComponent::new(None, None)),
         Some(ShapeComponent::new(
             Vector2::new(100., 100.),
             Color::white(),
