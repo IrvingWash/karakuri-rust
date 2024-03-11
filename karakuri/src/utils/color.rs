@@ -15,6 +15,10 @@ impl Color {
         }
     }
 
+    pub fn to_tuple(&self) -> (u8, u8, u8, u8) {
+        (self.red, self.green, self.blue, self.alpha)
+    }
+
     pub fn white() -> Color {
         Color {
             red: 255,
