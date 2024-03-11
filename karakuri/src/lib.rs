@@ -4,3 +4,4 @@ pub mod utils;
 
 mod logger;
 mod core;
+mod entity;
