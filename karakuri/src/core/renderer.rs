@@ -149,7 +149,7 @@ impl Renderer {
             .expect(DRAW_FAILURE_MESSAGE)
     }
 
-    pub fn polygon(&mut self, position: &Vector2, vertices: &Vec<Vector2>, color: &Color) {
+    pub fn polygon(&mut self, position: &Vector2, vertices: &[Vector2], color: &Color) {
         let color_tuple = color.to_tuple();
 
         for i in 0..vertices.len() {
