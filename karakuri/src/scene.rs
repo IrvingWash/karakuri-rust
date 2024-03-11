@@ -102,21 +102,25 @@ impl Scene {
         rigid_body: Option<RigidBodyComponent>,
         shape: Option<ShapeComponent>,
     ) {
-        let id = match self.free_ids.pop() {
-            Some(id) => id,
-            None => {
-                self.next_id += 1;
+        match self.free_ids.pop() {
+            Some(id) => {
+                self.entities[id] = Some(id);
 
-                self.next_id - 1
+                self.transform_components[id] = Some(transform.unwrap_or_default());
+                self.rigid_body_components[id] = rigid_body;
+                self.shape_components[id] = shape;
+            }
+            None => {
+                self.entities.push(Some(self.next_id));
+
+                self.transform_components
+                    .push(Some(transform.unwrap_or_default()));
+                self.rigid_body_components.push(rigid_body);
+                self.shape_components.push(shape);
+
+                self.next_id += 1;
             }
         };
-
-        self.entities.push(Some(id));
-
-        self.transform_components
-            .push(Some(transform.unwrap_or_default()));
-        self.rigid_body_components.push(rigid_body);
-        self.shape_components.push(shape);
     }
 
     pub fn remove_entity(&mut self, entity: Entity) {
