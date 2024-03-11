@@ -1,8 +1,8 @@
 use crate::{math::Vector2, utils::Color};
 
 pub struct ShapeComponent {
-    size: Vector2,
-    color: Color,
+    pub size: Vector2,
+    pub color: Color,
 }
 
 impl ShapeComponent {
