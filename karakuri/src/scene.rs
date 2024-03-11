@@ -13,6 +13,12 @@ pub struct Scene {
     next_id: usize,
 }
 
+impl Default for Scene {
+    fn default() -> Scene {
+        Scene::new()
+    }
+}
+
 impl Scene {
     pub fn new() -> Scene {
         Scene {

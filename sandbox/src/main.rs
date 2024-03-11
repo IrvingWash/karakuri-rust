@@ -7,7 +7,7 @@ use karakuri::{
 
 fn main() {
     let mut engine = Engine::new(
-        Some("Sonic"),
+        Some("Sonic The Hedgehog"),
         Some(Resolution::new(800, 600)),
         Some(Color::blue()),
         Some(60),

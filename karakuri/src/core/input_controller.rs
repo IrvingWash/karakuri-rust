@@ -1,4 +1,4 @@
-use sdl2::{event::Event, keyboard::Keycode, sys::KeyCode, EventPump};
+use sdl2::{event::Event, keyboard::Keycode, EventPump};
 
 pub struct InputResult {
     pub should_quit: bool,
@@ -6,6 +6,12 @@ pub struct InputResult {
     pub a: bool,
     pub s: bool,
     pub d: bool,
+}
+
+impl Default for InputResult {
+    fn default() -> InputResult {
+        InputResult::new()
+    }
 }
 
 impl InputResult {
