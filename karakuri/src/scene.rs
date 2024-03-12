@@ -56,11 +56,15 @@ impl Scene {
                     Some(entity) => {
                         let behavior = self.behavior_components[*entity].as_mut().unwrap();
 
-                        let transform = self.transform_components[*entity].as_mut().unwrap();
-                        let rigid_body = &mut self.rigid_body_components[*entity];
-                        let shape = &mut self.shape_components[*entity];
-
-                        behavior.on_update(delta_time, input_result, transform, rigid_body, shape);
+                        behavior.on_update(
+                            *entity,
+                            delta_time,
+                            input_result,
+                            &self.entities,
+                            &mut self.transform_components,
+                            &mut self.rigid_body_components,
+                            &mut self.shape_components,
+                        );
                     }
                 }
             }
