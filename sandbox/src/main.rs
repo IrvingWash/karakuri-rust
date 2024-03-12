@@ -2,7 +2,7 @@ use karakuri::{
     components::{BehaviorComponent, RigidBodyComponent, ShapeComponent, TransformComponent},
     math::Vector2,
     utils::{Color, Resolution},
-    Engine,
+    Engine, InputResult,
 };
 
 fn main() {
@@ -27,27 +27,67 @@ fn main() {
             Vector2::new(100., 100.),
             Color::white(),
         )),
-        Some(Box::new(Sonic {})),
+        Some(Box::new(Sonic::new())),
     );
 
     engine.start();
 }
 
-struct Sonic {}
+struct Sonic {
+    speed: f64,
+}
+
+impl Sonic {
+    pub fn new() -> Sonic {
+        Sonic { speed: 200. }
+    }
+}
 
 impl BehaviorComponent for Sonic {
-    fn on_start(&mut self) {}
-    fn on_destroy(&mut self) {}
+    fn on_start(
+        &mut self,
+        _transform: &mut TransformComponent,
+        _rigid_body: &mut Option<RigidBodyComponent>,
+        _shape: &mut Option<ShapeComponent>,
+    ) {
+    }
+
+    fn on_destroy(
+        &mut self,
+        _transform: &mut TransformComponent,
+        _rigid_body: &mut Option<RigidBodyComponent>,
+        _shape: &mut Option<ShapeComponent>,
+    ) {
+    }
+
     fn on_update(
         &mut self,
         delta_time: f64,
+        input_result: &InputResult,
         transform: &mut TransformComponent,
         rigid_body: &mut Option<RigidBodyComponent>,
+        _shape: &mut Option<ShapeComponent>,
     ) {
-        rigid_body.as_mut().unwrap().velocity.x = 200.;
+        if input_result.w {
+            rigid_body.as_mut().unwrap().velocity.y = -self.speed;
+        }
+
+        if input_result.a {
+            rigid_body.as_mut().unwrap().velocity.x = -self.speed;
+        }
+
+        if input_result.s {
+            rigid_body.as_mut().unwrap().velocity.y = self.speed;
+        }
+
+        if input_result.d {
+            rigid_body.as_mut().unwrap().velocity.x = self.speed;
+        }
 
         transform
             .position
             .add(&rigid_body.as_ref().unwrap().velocity.to_scaled(delta_time));
+
+        rigid_body.as_mut().unwrap().velocity.reset();
     }
 }
